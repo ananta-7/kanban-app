@@ -3,41 +3,442 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#4a6fa5" />
     <meta
       name="description"
-      content="Web site created using create-react-app"
+      content="Kanban Task Management App with React and Firebase"
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <title>Kanban Task Manager</title>
+    
+    <style>
+      /* Base Styles */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        background-color: #f5f7fa;
+        color: #2c3e50;
+      }
+      
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      /* Hero Section Styles */
+      .hero-section {
+        background: linear-gradient(135deg, #2c3e50 0%, #4a6fa5 100%);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+      }
+      
+      .hero-profile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 2rem;
+      }
+      
+      .hero-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        margin-bottom: 1.5rem;
+      }
+      
+      .hero-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0 0 0.5rem;
+        line-height: 1.2;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.25rem;
+        opacity: 0.9;
+        margin: 0;
+        font-weight: 400;
+      }
+      
+      .hero-description {
+        max-width: 800px;
+        margin: 2rem auto;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        opacity: 0.95;
+      }
+      
+      .tech-stack {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+      
+      .tech-item {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        padding: 1rem 1.5rem;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+      }
+      
+      .tech-icon {
+        font-size: 1.25rem;
+      }
+      
+      /* Firebase Details Section */
+      .firebase-section {
+        background-color: white;
+        padding: 3rem 1rem;
+        text-align: center;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+        color: #2c3e50;
+        position: relative;
+        display: inline-block;
+      }
+      
+      .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: #4a6fa5;
+      }
+      
+      .firebase-details {
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: left;
+        background-color: #f8f9fa;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      
+      .firebase-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      
+      .firebase-image {
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+      }
+      
+      .firebase-image:hover {
+        transform: translateY(-5px);
+      }
+      
+      .firebase-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+      
+      .feature-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      
+      .feature-card h3 {
+        color: #4a6fa5;
+        margin-top: 0;
+      }
+      
+      /* Footer Styles */
+      .app-footer {
+        background-color: #1a252f;
+        color: white;
+        padding: 2rem 0;
+        text-align: center;
+        margin-top: auto;
+      }
+      
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .social-links {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+      }
+      
+      .social-link {
+        color: white;
+        font-size: 1.5rem;
+        transition: transform 0.3s, color 0.3s;
+      }
+      
+      .social-link:hover {
+        color: #4a6fa5;
+        transform: translateY(-3px);
+      }
+      
+      .linktree-link {
+        display: inline-block;
+        margin-top: 1rem;
+        color: #4a6fa5;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+      }
+      
+      .linktree-link:hover {
+        color: #3a5a8a;
+        text-decoration: underline;
+      }
+      
+      .copyright {
+        margin-top: 1.5rem;
+        color: #bdc3c7;
+        font-size: 0.9rem;
+      }
+      
+      /* Responsive Adjustments */
+      @media (max-width: 992px) {
+        .firebase-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2rem;
+        }
+        
+        .hero-subtitle {
+          font-size: 1.1rem;
+        }
+        
+        .hero-photo {
+          width: 120px;
+          height: 120px;
+        }
+        
+        .tech-stack {
+          gap: 1rem;
+        }
+        
+        .tech-item {
+          padding: 0.75rem 1.25rem;
+          font-size: 0.9rem;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .hero-section {
+          padding: 3rem 1rem;
+        }
+        
+        .hero-title {
+          font-size: 1.8rem;
+        }
+        
+        .hero-photo {
+          width: 100px;
+          height: 100px;
+        }
+        
+        .tech-stack {
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .social-link {
+          font-size: 1.3rem;
+        }
+      }
+    </style>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      <div class="noscript-warning">
+        <h2>JavaScript is Required</h2>
+        <p>This application requires JavaScript to function properly. Please enable JavaScript in your browser settings.</p>
+      </div>
+    </noscript>
+    
+    <!-- Hero Section Template -->
+    <template id="hero-template">
+      <section class="hero-section">
+        <div class="hero-content">
+          <div class="hero-profile">
+            <img src="ANANTA_PHOTO.jpg" alt="Ananta Narayan Parida" class="hero-photo" />
+            <h1 class="hero-title">Ananta Narayan Parida</h1>
+            <p class="hero-subtitle">Full Stack Developer | Kanban Task Manager</p>
+          </div>
+          
+          <p class="hero-description">
+            This Kanban Task Management application helps teams visualize workflow, maximize efficiency, 
+            and improve productivity. Built with React and Firebase, it features real-time updates, 
+            drag-and-drop functionality, and secure user authentication.
+          </p>
+          
+          <div class="tech-stack">
+            <div class="tech-item">
+              <i class="fab fa-react tech-icon"></i>
+              <span>React</span>
+            </div>
+            <div class="tech-item">
+              <i class="fas fa-fire tech-icon"></i>
+              <span>Firebase</span>
+            </div>
+            <div class="tech-item">
+              <i class="fab fa-js tech-icon"></i>
+              <span>JavaScript</span>
+            </div>
+            <div class="tech-item">
+              <i class="fab fa-css3-alt tech-icon"></i>
+              <span>CSS3</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Firebase Details Section -->
+      <section class="firebase-section">
+        <h2 class="section-title">Firebase Integration</h2>
+        <div class="firebase-details">
+          <p>This application leverages Firebase for real-time data synchronization, user authentication, and secure database management. Below are key implementation details and screenshots from the Firebase console.</p>
+          
+          <div class="firebase-grid">
+            <div>
+              <img src="Ananta_firebase1.png" alt="Firebase Authentication Setup" class="firebase-image" />
+              <p>Firebase Authentication configuration showing email/password and Google sign-in methods.</p>
+            </div>
+            <div>
+              <img src="Ananta_firebase2.png" alt="Firestore Database Rules" class="firebase-image" />
+              <p>Firestore security rules ensuring data protection and proper access control.</p>
+            </div>
+          </div>
+          
+          <div class="firebase-features">
+            <div class="feature-card">
+              <h3>Real-time Database</h3>
+              <p>Firestore enables instant updates across all connected clients without page refreshes.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Secure Authentication</h3>
+              <p>Email/password and social login options with built-in security features.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Scalable Infrastructure</h3>
+              <p>Automatically handles traffic spikes and scales with your user base.</p>
+            </div>
+            <div class="feature-card">
+              <h3>Performance Monitoring</h3>
+              <p>Built-in tools to track and optimize application performance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </template>
+    
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    
+    <!-- Footer Template -->
+    <template id="footer-template">
+      <footer class="app-footer">
+        <div class="footer-content">
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/ananta-narayan-parida-95b8b7249/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="social-link">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/ananta-7" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="social-link">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://linktr.ee/ananta_2241016187" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="social-link">
+              <i class="fas fa-link"></i>
+            </a>
+          </div>
+          <a href="https://linktr.ee/ananta_2241016187" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="linktree-link">
+            View all my links on Linktree
+          </a>
+          <div class="copyright">
+            &copy; 2025 Kanban Task Manager. All rights reserved.
+          </div>
+        </div>
+      </footer>
+    </template>
+    
+    <script>
+      // Inject header and footer after React app loads
+      document.addEventListener('DOMContentLoaded', function() {
+        const root = document.getElementById('root');
+        
+        // Create and inject hero section
+        const heroTemplate = document.getElementById('hero-template');
+        const heroClone = heroTemplate.content.cloneNode(true);
+        document.body.insertBefore(heroClone, root);
+        
+        // Create and inject footer
+        const footerTemplate = document.getElementById('footer-template');
+        const footerClone = footerTemplate.content.cloneNode(true);
+        document.body.appendChild(footerClone);
+      });
+    </script>
   </body>
 </html>

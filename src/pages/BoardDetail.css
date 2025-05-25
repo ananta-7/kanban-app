@@ -1,0 +1,103 @@
+/* BoardDetail.css */
+.board-detail {
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #f4f5f7;
+}
+
+.board-detail h1 {
+  color: #172b4d;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.add-list {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.add-list input {
+  padding: 8px 12px;
+  border: 1px solid #dfe1e6;
+  border-radius: 3px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.add-list button {
+  background-color: #0079bf;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.add-list button:hover {
+  background-color: #026aa7;
+}
+
+.lists-container {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding-bottom: 15px;
+  min-height: 80vh;
+}
+
+/* Custom scrollbar for lists container */
+.lists-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.lists-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.lists-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.lists-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .board-detail {
+    padding: 15px;
+  }
+  
+  .board-detail h1 {
+    font-size: 20px;
+  }
+  
+  .add-list {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .add-list input {
+    width: 100%;
+  }
+  
+  .lists-container {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .board-detail {
+    padding: 10px;
+  }
+  
+  .add-list button {
+    width: 100%;
+  }
+}
